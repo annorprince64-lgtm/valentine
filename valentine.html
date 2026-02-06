@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Darling Belinda</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ffafcc 0%, #ffc8dd 50%, #cdb4db 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+        
+        .screen {
+            display: none;
+        }
+        
+        .screen.active {
+            display: block;
+            animation: fadeIn 0.8s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h1 {
+            color: #e63946;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .name-highlight {
+            color: #e63946;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            margin: 10px;
+            min-width: 150px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, #e63946, #ff758f);
+            color: white;
+            box-shadow: 0 5px 15px rgba(230, 57, 70, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(230, 57, 70, 0.6);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(to right, #2a9d8f, #4cc9f0);
+            color: white;
+            box-shadow: 0 5px 15px rgba(42, 157, 143, 0.4);
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(42, 157, 143, 0.6);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(to right, #e76f51, #f4a261);
+            color: white;
+            box-shadow: 0 5px 15px rgba(231, 111, 81, 0.4);
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        
+        .love-message {
+            background: linear-gradient(45deg, #ffafcc, #ffc8dd, #cdb4db);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        
+        .heart {
+            color: #e63946;
+            font-size: 2.5rem;
+            margin: 10px;
+            display: inline-block;
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            5% { transform: scale(1.1); }
+            10% { transform: scale(1); }
+            15% { transform: scale(1.1); }
+            20% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+        
+        .flowers-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .flower {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.7;
+            animation: float linear infinite;
+        }
+        
+        @keyframes float {
+            to {
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+        
+        .flower:nth-child(1) { left: 10%; animation-duration: 15s; animation-delay: 0s; color: #e63946; }
+        .flower:nth-child(2) { left: 20%; animation-duration: 18s; animation-delay: 2s; color: #ffafcc; }
+        .flower:nth-child(3) { left: 30%; animation-duration: 20s; animation-delay: 4s; color: #a8dadc; }
+        .flower:nth-child(4) { left: 40%; animation-duration: 16s; animation-delay: 1s; color: #e63946; }
+        .flower:nth-child(5) { left: 50%; animation-duration: 22s; animation-delay: 5s; color: #ffafcc; }
+        .flower:nth-child(6) { left: 60%; animation-duration: 19s; animation-delay: 3s; color: #a8dadc; }
+        .flower:nth-child(7) { left: 70%; animation-duration: 17s; animation-delay: 0.5s; color: #e63946; }
+        .flower:nth-child(8) { left: 80%; animation-duration: 21s; animation-delay: 4.5s; color: #ffafcc; }
+        .flower:nth-child(9) { left: 90%; animation-duration: 14s; animation-delay: 2.5s; color: #a8dadc; }
+        .flower:nth-child(10) { left: 95%; animation-duration: 24s; animation-delay: 6s; color: #e63946; }
+        
+        .no-clicks {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 15px;
+            font-style: italic;
+        }
+        
+        .final-screen {
+            position: relative;
+            z-index: 10;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            p {
+                font-size: 1.1rem;
+            }
+            
+            .btn {
+                padding: 12px 30px;
+                font-size: 1.1rem;
+                min-width: 120px;
+            }
+            
+            .love-message {
+                padding: 20px;
+            }
+        }
+        
+        /* Fireworks animation for the final screen */
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        @keyframes explode {
+            0% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty));
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Flowers floating in background -->
+    <div class="flowers-container" id="flowersContainer"></div>
+    
+    <div class="container">
+        <!-- Screen 1: Initial greeting -->
+        <div class="screen active" id="screen1">
+            <h1>Hello, <span class="name-highlight">Belinda</span>! <i class="fas fa-heart" style="color:#e63946;"></i></h1>
+            <p>My beautiful, you light up my world with your smile and bring so much joy into my life.</p>
+            <button class="btn btn-primary" id="startBtn">Click Me, My Love</button>
+        </div>
+        
+        <!-- Screen 2: Yes/No options -->
+        <div class="screen" id="screen2">
+            <h1><span class="name-highlight">Belinda</span>, Will You Be Mine Forever? <i class="fas fa-heart" style="color:#e63946;"></i></h1>
+            <p>Dear, I promise to love you, cherish you, and make you smile every single day of your life.</p>
+            
+            <div>
+                <button class="btn btn-secondary" id="yesBtn">Yes, Forever! <i class="fas fa-heart"></i></button>
+                <button class="btn btn-danger" id="noBtn">No, Sorry</button>
+            </div>
+            
+            <p class="no-clicks" id="noClicks">No button clicks remaining: <span id="clickCount">10</span></p>
+        </div>
+        
+        <!-- Screen 3: Positive response -->
+        <div class="screen final-screen" id="screen3">
+            <h1>You Made Me So Happy, <span class="name-highlight">Belinda</span>! <i class="fas fa-heart" style="color:#e63946;"></i></h1>
+            
+            <div class="love-message">
+                <p>You just made me the happiest person in the world! <i class="heart fas fa-heart"></i></p>
+                <p>My love for you grows stronger with each passing day. You are my sunshine, my joy, and my everything. <i class="heart fas fa-heart"></i></p>
+                <p>I cherish every moment with you, and look forward to a lifetime of laughter, love, and beautiful memories together. <i class="heart fas fa-heart"></i></p>
+                <p>I love you more than words can express, my beautiful! <i class="heart fas fa-heart"></i></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM elements
+        const screen1 = document.getElementById('screen1');
+        const screen2 = document.getElementById('screen2');
+        const screen3 = document.getElementById('screen3');
+        const startBtn = document.getElementById('startBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const clickCount = document.getElementById('clickCount');
+        const flowersContainer = document.getElementById('flowersContainer');
+        
+        // Variables
+        let noButtonClicks = 10;
+        let noButtonSize = 1;
+        let isMoving = false;
+        
+        // Create floating flowers
+        function createFlowers() {
+            const flowerIcons = ['🌸', '🌹', '💐', '🌺', '🌻', '🥀', '🌷', '💮', '🏵️', '🪷'];
+            
+            for (let i = 0; i < 20; i++) {
+                const flower = document.createElement('div');
+                flower.className = 'flower';
+                flower.textContent = flowerIcons[Math.floor(Math.random() * flowerIcons.length)];
+                flower.style.left = `${Math.random() * 100}%`;
+                flower.style.fontSize = `${Math.random() * 1.5 + 1}rem`;
+                flower.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                flower.style.animationDelay = `${Math.random() * 5}s`;
+                flower.style.opacity = `${Math.random() * 0.5 + 0.3}`;
+                flowersContainer.appendChild(flower);
+            }
+        }
+        
+        // Create fireworks effect
+        function createFireworks() {
+            const container = document.querySelector('.container');
+            for (let i = 0; i < 50; i++) {
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+                
+                // Random color
+                const colors = ['#e63946', '#ffafcc', '#a8dadc', '#ff758f', '#cdb4db'];
+                firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Random position around the container
+                const containerRect = container.getBoundingClientRect();
+                const startX = containerRect.width / 2;
+                const startY = containerRect.height / 2;
+                
+                firework.style.left = `${startX}px`;
+                firework.style.top = `${startY}px`;
+                
+                // Random direction and distance
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 50 + Math.random() * 100;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance;
+                
+                firework.style.setProperty('--tx', `${tx}px`);
+                firework.style.setProperty('--ty', `${ty}px`);
+                
+                // Animation
+                firework.style.animation = `explode ${0.5 + Math.random() * 0.5}s forwards`;
+                firework.style.animationDelay = `${Math.random() * 0.5}s`;
+                
+                container.appendChild(firework);
+                
+                // Remove firework after animation
+                setTimeout(() => {
+                    if (firework.parentNode) {
+                        firework.parentNode.removeChild(firework);
+                    }
+                }, 1000);
+            }
+        }
+        
+        // Switch screens
+        function showScreen(screenToShow) {
+            // Hide all screens
+            screen1.classList.remove('active');
+            screen2.classList.remove('active');
+            screen3.classList.remove('active');
+            
+            // Show the requested screen
+            screenToShow.classList.add('active');
+            
+            // Create fireworks when showing the final screen
+            if (screenToShow === screen3) {
+                // Create initial fireworks
+                createFireworks();
+                
+                // Continue fireworks every 1.5 seconds
+                const fireworksInterval = setInterval(() => {
+                    createFireworks();
+                }, 1500);
+                
+                // Stop fireworks after 10 seconds
+                setTimeout(() => {
+                    clearInterval(fireworksInterval);
+                }, 10000);
+            }
+        }
+        
+        // Handle No button click
+        function handleNoClick() {
+            if (noButtonClicks <= 0) return;
+            
+            // Decrease click count
+            noButtonClicks--;
+            clickCount.textContent = noButtonClicks;
+            
+            // Make button smaller
+            noButtonSize -= 0.08;
+            noBtn.style.transform = `scale(${noButtonSize})`;
+            
+            // Move button to random position
+            if (!isMoving) {
+                isMoving = true;
+                
+                // Calculate random position within container
+                const container = document.querySelector('.container');
+                const containerRect = container.getBoundingClientRect();
+                const btnRect = noBtn.getBoundingClientRect();
+                
+                const maxX = containerRect.width - btnRect.width - 20;
+                const maxY = containerRect.height - btnRect.height - 20;
+                
+                const randomX = Math.floor(Math.random() * maxX);
+                const randomY = Math.floor(Math.random() * maxY);
+                
+                // Apply position (relative to container)
+                noBtn.style.position = 'absolute';
+                noBtn.style.left = `${randomX}px`;
+                noBtn.style.top = `${randomY}px`;
+                
+                // Reset after animation
+                setTimeout(() => {
+                    isMoving = false;
+                }, 300);
+            }
+            
+            // If no clicks left, disable button
+            if (noButtonClicks <= 0) {
+                noBtn.disabled = true;
+                noBtn.textContent = "No more clicks!";
+                noBtn.style.opacity = "0.5";
+                noBtn.style.cursor = "not-allowed";
+            }
+        }
+        
+        // Event listeners
+        startBtn.addEventListener('click', () => {
+            showScreen(screen2);
+        });
+        
+        yesBtn.addEventListener('click', () => {
+            showScreen(screen3);
+        });
+        
+        noBtn.addEventListener('click', handleNoClick);
+        
+        // Initialize flowers
+        createFlowers();
+    </script>
+</body>
+</html>
